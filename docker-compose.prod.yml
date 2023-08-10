@@ -1,0 +1,23 @@
+services:
+  web:
+    build:
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - "9090:80"
+
+  app:
+    build:
+      dockerfile: ./php/Dockerfile
+
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - af-db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: afpass
+      POSTGRES_USER: afuser
+      POSTGRES_DB: af
+
+volumes:
+  af-db-data:
